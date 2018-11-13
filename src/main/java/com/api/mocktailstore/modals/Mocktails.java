@@ -31,6 +31,9 @@ public class Mocktails implements Serializable {
 	@OneToMany(mappedBy = "mocktailId")
 	private List<Rating> rating;
 
+	@OneToMany
+	private List<MocktailImages> images;
+
 	public Integer getId() {
 		return id;
 	}
@@ -85,6 +88,21 @@ public class Mocktails implements Serializable {
 
 	public List<Rating> getRating() {
 		return rating;
+	}
+
+	public List<MocktailImages> getImages() {
+		return images;
+	}
+
+	public void setImages(List<MocktailImages> images) {
+		this.images = images;
+	}
+
+	@Override
+	public String toString() {
+		return "Mocktails{" + "id=" + id + ", name=" + name + ", tagLine=" + tagLine + ", description=" + description
+				+ ", flavour=" + flavour + ", visible=" + visible + ", \nrating=" + rating + ", \nimages=" + images
+				+ '}';
 	}
 
 }
