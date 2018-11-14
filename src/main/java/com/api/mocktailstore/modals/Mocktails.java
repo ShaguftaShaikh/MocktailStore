@@ -2,6 +2,7 @@ package com.api.mocktailstore.modals;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,7 +38,7 @@ public class Mocktails implements Serializable {
 	private String flavour;
 	private Boolean visible;
 
-	@OneToMany(mappedBy = "mocktailId")
+	@OneToMany
 	private List<Rating> rating;
 
 	@OneToMany
