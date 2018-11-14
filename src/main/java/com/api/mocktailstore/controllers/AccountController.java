@@ -1,20 +1,16 @@
 package com.api.mocktailstore.controllers;
 
-import javax.validation.Valid;
+import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.mocktailstore.modals.Visitor;
-import com.api.mocktailstore.service.VisitorService;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @RestController
 @RequestMapping("/account")
@@ -29,11 +25,12 @@ public class AccountController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/login")
-	public ResponseEntity<String> login(@RequestBody User user) {
+	public ResponseEntity<String> login(@RequestBody Visitor visitor) {
 		ResponseEntity<String> response = null;
 		try {
-			if (!Objects.isNull(user) && !Objects.isNull(user.getUsername()) && !Objects.isNull(user.getPassword())) {
-				String username = user.getUsername();
+			if (!Objects.isNull(visitor) && !Objects.isNull(visitor.getUsername())
+					&& !Objects.isNull(visitor.getPassword())) {
+				String username = visitor.getUsername();
 
 			}
 		} catch (Exception e) {
