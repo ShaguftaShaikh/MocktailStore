@@ -2,8 +2,9 @@ package com.api.mocktailstore.controllers;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,28 +12,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.mocktailstore.modals.Visitor;
 import com.api.mocktailstore.service.VisitorService;
-import com.api.mocktailstore.utils.MocktailStoreConstants;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-/**
- * @author Shagufta
- *
- */
-@CrossOrigin
 @RestController
-public class SignupController {
+@RequestMapping("/account")
+public class AccountController {
 
 	@Autowired
 	VisitorService visitorService;
 
-	@RequestMapping(method = RequestMethod.POST, value = MocktailStoreConstants.API_URL + "/signup")
-	public void signupUser(@Valid @RequestBody Visitor visitor) {
+	private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
+
+	@RequestMapping(method = RequestMethod.POST, value = "/signup")
+	public void signup(@Valid @RequestBody Visitor visitor) {
+		LOGGER.info("signup method is called");
 		visitorService.saveVisitor(visitor);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = MocktailStoreConstants.API_URL + "/username/exist")
+	@RequestMapping(method = RequestMethod.POST, value = "/username/exist")
 	public JsonNode usernameExist(@RequestBody String username) {
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode responseNode = mapper.createObjectNode();
@@ -49,4 +48,11 @@ public class SignupController {
 		}
 		return responseNode;
 	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/login")
+	public void login() {
+		System.out.println("login method is called");
+		LOGGER.info("login method is called");
+	}
+
 }
