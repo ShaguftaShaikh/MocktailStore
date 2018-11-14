@@ -7,4 +7,5 @@ import com.api.mocktailstore.modals.Visitor;
 public interface VisitorRepository extends JpaRepository<Visitor, Long> {
 
 	public Visitor findByUsername(String username);
+
 }

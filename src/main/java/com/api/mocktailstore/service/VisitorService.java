@@ -23,4 +23,12 @@ public class VisitorService {
 	public Visitor findByUsername(String username) {
 		return visitorRepository.findByUsername(username);
 	}
+
+	public boolean login(Visitor savedVisitor, Visitor visitor) {
+		if (savedVisitor.getUsername().equals(visitor.getUsername())
+				&& savedVisitor.getPassword().equals(visitor.getPassword())) {
+			return true;
+		}
+		return false;
+	}
 }
