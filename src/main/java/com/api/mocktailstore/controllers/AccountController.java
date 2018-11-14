@@ -20,39 +20,26 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 @RequestMapping("/account")
 public class AccountController {
 
-	@Autowired
-	VisitorService visitorService;
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
 
-	@RequestMapping(method = RequestMethod.POST, value = "/signup")
-	public void signup(@Valid @RequestBody Visitor visitor) {
+	@RequestMapping(method = RequestMethod.GET, value = "/signup")
+	public void signup() {
+		System.out.println("signup method is called");
 		LOGGER.info("signup method is called");
-		visitorService.saveVisitor(visitor);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/username/exist")
-	public JsonNode usernameExist(@RequestBody String username) {
-		ObjectMapper mapper = new ObjectMapper();
-		JsonNode responseNode = mapper.createObjectNode();
+	@RequestMapping(method = RequestMethod.POST, value = "/login")
+	public ResponseEntity<String> login(@RequestBody User user) {
+		ResponseEntity<String> response = null;
+		try {
+			if (!Objects.isNull(user) && !Objects.isNull(user.getUsername()) && !Objects.isNull(user.getPassword())) {
+				String username = user.getUsername();
 
-		if (username != "" && username != null && !username.equals("")) {
-			Visitor visitor = visitorService.findByUsername(username);
-			if (visitor != null) {
-				((ObjectNode) responseNode).put("result", false);
-			} else {
-				((ObjectNode) responseNode).put("result", true);
 			}
-		} else {
-			((ObjectNode) responseNode).put("result", false);
-		}
-		return responseNode;
-	}
+		} catch (Exception e) {
 
-	@RequestMapping(method = RequestMethod.GET, value = "/login")
-	public void login() {
-		System.out.println("login method is called");
-		LOGGER.info("login method is called");
+		}
+		return response;
 	}
 
 }
