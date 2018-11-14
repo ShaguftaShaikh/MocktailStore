@@ -2,11 +2,15 @@ package com.api.mocktailstore.modals;
 
 import java.io.Serializable;
 import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -23,7 +27,11 @@ public class Orders implements Serializable {
 	@GenericGenerator(name = "native", strategy = "native")
 	private Integer id;
 	private String description;
+
+	@Size(min = 30, message = "Minimum 30 characters required")
 	private String venue;
+
+	@NotEmpty(message = "order date must not be empty")
 	private Date OrderDate;
 
 	@ManyToOne

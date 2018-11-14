@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
+
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -22,9 +24,16 @@ public class Mocktails implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
 	@GenericGenerator(name = "native", strategy = "native")
 	private Integer id;
+	
+	@NotEmpty(message="Name must not be empty")
 	private String name;
+	
+	@NotEmpty(message="Tag line must not be empty")
 	private String tagLine;
+	
 	private String description;
+	
+	@NotEmpty(message="Flavour must not be empty")
 	private String flavour;
 	private Boolean visible;
 
