@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/account")
 public class AccountController {
@@ -39,19 +41,18 @@ public class AccountController {
 		if (username != "" && username != null && !username.equals("")) {
 			Visitor visitor = visitorService.findByUsername(username);
 			if (visitor != null) {
-				((ObjectNode) responseNode).put("result", false);
-			} else {
 				((ObjectNode) responseNode).put("result", true);
+			} else {
+				((ObjectNode) responseNode).put("result", false);
 			}
 		} else {
-			((ObjectNode) responseNode).put("result", false);
+			((ObjectNode) responseNode).put("result", true);
 		}
 		return responseNode;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/login")
 	public void login() {
-		System.out.println("login method is called");
 		LOGGER.info("login method is called");
 	}
 
