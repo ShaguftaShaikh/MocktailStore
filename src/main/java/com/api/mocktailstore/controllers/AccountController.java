@@ -27,66 +27,70 @@ import com.api.mocktailstore.service.UserService;
 public class AccountController {
 
 	@Autowired
-<<<<<<< HEAD
-	private VisitorService visitorService;
-=======
-	UserService visitorService;
->>>>>>> upstream/master
+	private UserService userService;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
 
 	@RequestMapping(method = RequestMethod.POST, value = "/signup")
 	public void signup(@Valid @RequestBody User user) {
 		LOGGER.info("signup method is called");
-		visitorService.saveVisitor(user);
+		userService.saveUser(user);
 	}
 
-	/*@RequestMapping(method = RequestMethod.POST, value = "/username/exist")
-	public JsonNode usernameExist(@RequestBody String username) {
-		ObjectMapper mapper = new ObjectMapper();
-		JsonNode responseNode = mapper.createObjectNode();
+	/*
+	 * @RequestMapping(method = RequestMethod.POST, value = "/username/exist")
+	 * public JsonNode usernameExist(@RequestBody String username) { ObjectMapper
+	 * mapper = new ObjectMapper(); JsonNode responseNode =
+	 * mapper.createObjectNode();
+	 * 
+	 * if (username != "" && username != null && !username.equals("")) { Customer
+	 * visitor = visitorService.findByUsername(username); if (visitor != null) {
+	 * ((ObjectNode) responseNode).put("result", true); } else { ((ObjectNode)
+	 * responseNode).put("result", false); } } else { ((ObjectNode)
+	 * responseNode).put("result", true); } return responseNode; }
+	 */
 
-		if (username != "" && username != null && !username.equals("")) {
-			Customer visitor = visitorService.findByUsername(username);
-			if (visitor != null) {
-				((ObjectNode) responseNode).put("result", false);
-			} else {
-				((ObjectNode) responseNode).put("result", true);
-			}
-		} else {
-			((ObjectNode) responseNode).put("result", false);
-		}
-		return responseNode;
-	}*/
-
+	/**
+	 * 
+	 * Login through email and password
+	 * 
+	 * @param user
+	 *            for email and password
+	 * @return response entity with valid HTTP code and message.
+	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<String> login(@RequestBody Visitor visitor) {
+	public ResponseEntity<String> login(@RequestBody User user) {
+		LOGGER.info("Received a request for login");
 		ResponseEntity<String> response = null;
 		try {
-			if (!Objects.isNull(visitor) && !Objects.isNull(visitor.getUsername())
-					&& !Objects.isNull(visitor.getPassword())) {
-				String username = visitor.getUsername();
-				Visitor savedVisitor = visitorService.findByUsername(username);
-				if (Objects.isNull(savedVisitor)) {
-					response = new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			if (!Objects.isNull(user) && !Objects.isNull(user.getEmail()) && !Objects.isNull(user.getPassword())) {
+				final String username = user.getEmail();
+				final User savedUser = userService.findByEmail(username);
+				JSONObject exceptionJson = new JSONObject();
+				exceptionJson.put("message", "Invalid login. Please check your name and password.");
+				if (Objects.isNull(savedUser)) {
+					LOGGER.info("Login failed.");
+					response = new ResponseEntity<>(exceptionJson.toString(), HttpStatus.UNAUTHORIZED);
 				} else {
-					boolean isLoginSuccessful = visitorService.login(savedVisitor, visitor);
+					final boolean isLoginSuccessful = userService.login(savedUser, user);
 					if (isLoginSuccessful) {
 						JSONObject userJson = new JSONObject();
-						userJson.put("email", visitor.getUsername()).put("password", visitor.getPassword());
+						userJson.put("email", user.getEmail()).put("password", user.getPassword());
 						response = new ResponseEntity<>(userJson.toString(), HttpStatus.OK);
+						LOGGER.info("Login successful");
 					} else {
-						JSONObject exceptionJson = new JSONObject();
-						exceptionJson.put("message", "Invalid login. Please check your name and password.");
 						response = new ResponseEntity<>(exceptionJson.toString(), HttpStatus.UNAUTHORIZED);
+						LOGGER.info("Login failed.");
 					}
 				}
 			} else {
 				JSONObject exceptionJson = new JSONObject();
 				exceptionJson.put("message", "Email or password cannot be null.");
 				response = new ResponseEntity<>(exceptionJson.toString(), HttpStatus.BAD_REQUEST);
+				LOGGER.info("Login failed.");
 			}
 		} catch (JSONException e) {
+			LOGGER.error("Error occurred while creating JSON object");
 			response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return response;

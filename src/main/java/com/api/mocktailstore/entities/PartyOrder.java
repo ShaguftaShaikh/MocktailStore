@@ -46,6 +46,20 @@ public class PartyOrder implements Serializable {
 	@ManyToOne
 	private User placedBy;
 
+	public PartyOrder() {
+
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("PartyOrder [orderId=").append(orderId).append(", description=").append(description)
+				.append(", venue=").append(venue).append(", placedDate=").append(placedDate).append(", deliveryDate=")
+				.append(deliveryDate).append(", orderMocktails=").append(orderMocktails).append(", placedBy=")
+				.append(placedBy).append("]");
+		return builder.toString();
+	}
+
 	public long getOrderId() {
 		return orderId;
 	}

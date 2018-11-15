@@ -27,6 +27,10 @@ public class Rating implements Serializable {
 	private boolean visible;
 	private User ratedBy;
 
+	public Rating() {
+
+	}
+
 	public long getRatingId() {
 		return ratingId;
 	}
@@ -65,6 +69,14 @@ public class Rating implements Serializable {
 
 	public void setRatedBy(User ratedBy) {
 		this.ratedBy = ratedBy;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Rating [ratingId=").append(ratingId).append(", star=").append(star).append(", comment=")
+				.append(comment).append(", visible=").append(visible).append(", ratedBy=").append(ratedBy).append("]");
+		return builder.toString();
 	}
 
 }

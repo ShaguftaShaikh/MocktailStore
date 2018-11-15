@@ -50,6 +50,10 @@ public class Mocktail implements Serializable {
 		return name;
 	}
 
+	public Mocktail() {
+
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}

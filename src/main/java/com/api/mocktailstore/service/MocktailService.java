@@ -12,15 +12,9 @@ import com.api.mocktailstore.repository.MocktailRepository;
 public class MocktailService {
 
 	@Autowired
-<<<<<<< HEAD
-	private MocktailRepository mocktailRepository;
-
-	public List<Mocktails> getMocktails() {
-=======
 	MocktailRepository mocktailRepository;
-	
-	public List<Mocktail> getMocktails(){
->>>>>>> upstream/master
+
+	public List<Mocktail> getMocktails() {
 		return mocktailRepository.findAll();
 	}
 }

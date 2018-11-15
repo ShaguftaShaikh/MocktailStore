@@ -1,10 +1,12 @@
 package com.api.mocktailstore.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -19,6 +21,10 @@ public class Blog implements Serializable {
 	private String content;
 	private String visibile;
 	private String author;
+
+	public Blog() {
+
+	}
 
 	public String getAuthor() {
 		return author;
@@ -58,6 +64,14 @@ public class Blog implements Serializable {
 
 	public void setVisibile(String visibile) {
 		this.visibile = visibile;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Blog [blogId=").append(blogId).append(", title=").append(title).append(", content=")
+				.append(content).append(", visibile=").append(visibile).append(", author=").append(author).append("]");
+		return builder.toString();
 	}
 
 }

@@ -47,6 +47,10 @@ public class User implements Serializable {
 		return id;
 	}
 
+	public User() {
+
+	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -90,4 +94,14 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("User [id=").append(id).append(", contactNo=").append(contactNo).append(", email=").append(email)
+				.append(", password=").append(password).append(", firstName=").append(firstName).append(", lastName=")
+				.append(lastName).append("]");
+		return builder.toString();
+	}
+
 }
