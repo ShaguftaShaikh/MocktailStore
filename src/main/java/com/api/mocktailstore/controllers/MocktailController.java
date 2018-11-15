@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.mocktailstore.modals.Mocktails;
+import com.api.mocktailstore.entities.Mocktail;
 import com.api.mocktailstore.service.MocktailService;
 
 @CrossOrigin
@@ -24,7 +24,7 @@ public class MocktailController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MocktailController.class);
 
 	@RequestMapping(method = RequestMethod.GET, value = "/list")
-	public List<Mocktails> getMocktails() {
+	public List<Mocktail> getMocktails() {
 		LOGGER.info("Fetching list of mocktails");
 		return mocktailService.getMocktails();
 	}

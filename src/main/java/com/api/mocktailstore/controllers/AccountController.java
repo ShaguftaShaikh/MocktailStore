@@ -11,11 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.mocktailstore.modals.Visitor;
-import com.api.mocktailstore.service.VisitorService;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.api.mocktailstore.entities.User;
+import com.api.mocktailstore.service.UserService;
 
 @CrossOrigin
 @RestController
@@ -23,23 +20,23 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class AccountController {
 
 	@Autowired
-	VisitorService visitorService;
+	UserService visitorService;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
 
 	@RequestMapping(method = RequestMethod.POST, value = "/signup")
-	public void signup(@Valid @RequestBody Visitor visitor) {
+	public void signup(@Valid @RequestBody User user) {
 		LOGGER.info("signup method is called");
-		visitorService.saveVisitor(visitor);
+		visitorService.saveVisitor(user);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/username/exist")
+	/*@RequestMapping(method = RequestMethod.POST, value = "/username/exist")
 	public JsonNode usernameExist(@RequestBody String username) {
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode responseNode = mapper.createObjectNode();
 
 		if (username != "" && username != null && !username.equals("")) {
-			Visitor visitor = visitorService.findByUsername(username);
+			Customer visitor = visitorService.findByUsername(username);
 			if (visitor != null) {
 				((ObjectNode) responseNode).put("result", true);
 			} else {
@@ -49,7 +46,7 @@ public class AccountController {
 			((ObjectNode) responseNode).put("result", true);
 		}
 		return responseNode;
-	}
+	}*/
 
 	@RequestMapping(method = RequestMethod.GET, value = "/login")
 	public void login() {

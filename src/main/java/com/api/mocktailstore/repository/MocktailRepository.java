@@ -2,8 +2,8 @@ package com.api.mocktailstore.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.api.mocktailstore.modals.Mocktails;
+import com.api.mocktailstore.entities.Mocktail;
 
-public interface MocktailRepository extends JpaRepository<Mocktails, Long>{
+public interface MocktailRepository extends JpaRepository<Mocktail, Long>{
 
 }

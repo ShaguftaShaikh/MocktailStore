@@ -1,4 +1,4 @@
-package com.api.mocktailstore.modals;
+package com.api.mocktailstore.entities;
 
 import java.io.Serializable;
 
@@ -8,11 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.lang.NonNull;
 
 /**
  *
@@ -26,11 +26,13 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
 	@GenericGenerator(name = "native", strategy = "native")
-	protected Integer id;
+	protected long id;
 
-	@NonNull
-	@Size(min = 5, message = "username should be atleast 5 characters long")
-	protected String username;
+	@Size(min = 10, max = 10, message = "contact number should be 10 digits long")
+	private String contactNo;
+
+	@Email(message = "Invalid email address")
+	private String email;
 
 	@Size(min = 8, message = "password should be atleast 8 characters long")
 	protected String password;
@@ -41,20 +43,12 @@ public class User implements Serializable {
 	@NotEmpty
 	protected String lastName;
 
-	public Integer getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(long id) {
 		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getPassword() {
@@ -79,5 +73,21 @@ public class User implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getContactNo() {
+		return contactNo;
+	}
+
+	public void setContactNo(String contactNo) {
+		this.contactNo = contactNo;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }
