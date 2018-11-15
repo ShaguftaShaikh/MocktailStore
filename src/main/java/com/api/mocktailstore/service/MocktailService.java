@@ -12,9 +12,9 @@ import com.api.mocktailstore.repository.MocktailRepository;
 public class MocktailService {
 
 	@Autowired
-	MocktailRepository mocktailRepository;
-	
-	public List<Mocktails> getMocktails(){
+	private MocktailRepository mocktailRepository;
+
+	public List<Mocktails> getMocktails() {
 		return mocktailRepository.findAll();
 	}
 }

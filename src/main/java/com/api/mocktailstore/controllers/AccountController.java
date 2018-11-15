@@ -30,7 +30,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class AccountController {
 
 	@Autowired
-	VisitorService visitorService;
+	private VisitorService visitorService;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
 
@@ -58,7 +58,7 @@ public class AccountController {
 		return responseNode;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<String> login(@RequestBody Visitor visitor) {
 		ResponseEntity<String> response = null;
 		try {
