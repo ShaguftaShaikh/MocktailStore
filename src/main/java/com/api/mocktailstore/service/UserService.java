@@ -36,4 +36,23 @@ public class UserService {
 		}
 		return false;
 	}
+
+	/**
+	 * Updates the user profile except id and email
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public User editProfile(final User user) {
+		User savedUser = userRepository.findByEmail(user.getEmail());
+		LOGGER.debug("Updating " + savedUser.toString());
+		savedUser.setId(savedUser.getId());
+		savedUser.setContactNo(user.getContactNo());
+		savedUser.setFirstName(user.getFirstName());
+		savedUser.setLastName(user.getLastName());
+		savedUser.setPassword(user.getPassword());
+		userRepository.save(savedUser);
+		LOGGER.debug("Updated to: " + savedUser.toString());
+		return savedUser;
+	}
 }

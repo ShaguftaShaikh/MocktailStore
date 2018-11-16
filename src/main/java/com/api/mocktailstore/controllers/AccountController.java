@@ -96,4 +96,20 @@ public class AccountController {
 		return response;
 	}
 
+	/**
+	 * Edits user profile except email
+	 * 
+	 * @param user
+	 *            contains updated values
+	 * @return user with updated values
+	 */
+	@RequestMapping(value = "/editProfile", method = RequestMethod.POST)
+	public ResponseEntity<User> editProfile(@RequestBody User user) {
+		LOGGER.info("Received a request for edit profile");
+		ResponseEntity<User> response = null;
+		final User updatedUser = userService.editProfile(user);
+		response = new ResponseEntity<>(updatedUser, HttpStatus.OK);
+		return response;
+	}
+
 }
