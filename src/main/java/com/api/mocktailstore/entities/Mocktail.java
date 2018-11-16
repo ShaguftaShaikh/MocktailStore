@@ -34,8 +34,6 @@ public class Mocktail implements Serializable {
 
 	private String description;
 
-	@NotEmpty(message = "Flavour must not be empty")
-	private String flavour;
 	private Boolean visible;
 
 	@OneToMany(mappedBy = "mocktail")
@@ -45,6 +43,27 @@ public class Mocktail implements Serializable {
 	private List<Rating> ratings;
 
 	private String imageUrl;
+
+	@OneToMany(mappedBy = "mocktail")
+	private List<IngredientMocktail> ingridientMocktail;
+
+	private String recipe;
+
+	public List<IngredientMocktail> getIngridientMocktail() {
+		return ingridientMocktail;
+	}
+
+	public void setIngridientMocktail(List<IngredientMocktail> ingridientMocktail) {
+		this.ingridientMocktail = ingridientMocktail;
+	}
+
+	public String getRecipe() {
+		return recipe;
+	}
+
+	public void setRecipe(String recipe) {
+		this.recipe = recipe;
+	}
 
 	public String getName() {
 		return name;
@@ -76,14 +95,6 @@ public class Mocktail implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getFlavour() {
-		return flavour;
-	}
-
-	public void setFlavour(String flavour) {
-		this.flavour = flavour;
 	}
 
 	public Boolean isVisible() {
@@ -120,12 +131,6 @@ public class Mocktail implements Serializable {
 
 	public void setRatings(List<Rating> ratings) {
 		this.ratings = ratings;
-	}
-
-	@Override
-	public String toString() {
-		return "Mocktails{" + "id=" + mocktailId + ", name=" + name + ", tagLine=" + tagLine + ", description="
-				+ description + ", flavour=" + flavour + ", visible=" + visible + ", \nratings=" + ratings + '}';
 	}
 
 }
