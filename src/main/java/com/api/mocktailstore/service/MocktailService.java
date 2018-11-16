@@ -13,8 +13,8 @@ public class MocktailService {
 
 	@Autowired
 	MocktailRepository mocktailRepository;
-	
-	public List<Mocktail> getMocktails(){
+
+	public List<Mocktail> getMocktails() {
 		return mocktailRepository.findAll();
 	}
 }

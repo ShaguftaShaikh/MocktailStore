@@ -21,6 +21,10 @@ public class OrderMocktail {
 
 	private int quantity;
 
+	public OrderMocktail() {
+
+	}
+
 	public Mocktail getMocktail() {
 		return mocktail;
 	}
@@ -43,6 +47,14 @@ public class OrderMocktail {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("OrderMocktail [orderMocktailId=").append(orderMocktailId).append(", mocktail=").append(mocktail)
+				.append(", order=").append(order).append(", quantity=").append(quantity).append("]");
+		return builder.toString();
 	}
 
 }

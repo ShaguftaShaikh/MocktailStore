@@ -26,6 +26,9 @@ public class Admin implements Serializable {
 	private String email;
 	private String password;
 
+	public Admin() {
+	}
+
 	public long getAdminId() {
 		return adminId;
 	}
@@ -48,6 +51,14 @@ public class Admin implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Admin [adminId=").append(adminId).append(", email=").append(email).append(", password=")
+				.append(password).append("]");
+		return builder.toString();
 	}
 
 }

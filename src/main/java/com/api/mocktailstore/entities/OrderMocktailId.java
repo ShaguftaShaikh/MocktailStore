@@ -16,6 +16,10 @@ public class OrderMocktailId implements Serializable {
 		return orderId;
 	}
 
+	public OrderMocktailId() {
+
+	}
+
 	public void setOrderId(long orderId) {
 		this.orderId = orderId;
 	}
@@ -27,4 +31,13 @@ public class OrderMocktailId implements Serializable {
 	public void setMocktailId(long mocktailId) {
 		this.mocktailId = mocktailId;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("OrderMocktailId [orderId=").append(orderId).append(", mocktailId=").append(mocktailId)
+				.append("]");
+		return builder.toString();
+	}
+
 }
