@@ -87,4 +87,25 @@ public class BlogController {
 		return response;
 	}
 
+	@RequestMapping(method = RequestMethod.POST, value = "/editBlog")
+	public ResponseEntity<String> editBlog(@RequestBody Blog blog) {
+		LOGGER.info("Received a request to edit blog");
+		ResponseEntity<String> response = null;
+		JSONObject exceptionMessage = new JSONObject();
+		exceptionMessage.put("message", "internal error");
+		try {
+			final Blog savedBlog = blogService.updateBlog(blog);
+			String updatedBlogJsonString = blogService.getJsonString(savedBlog);
+			if (!Objects.isNull(updatedBlogJsonString)) {
+				response = new ResponseEntity<>(updatedBlogJsonString, HttpStatus.OK);
+			} else {
+				response = new ResponseEntity<>(exceptionMessage.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		} catch (JSONException e) {
+			LOGGER.error("Error occurred while creating json object");
+			response = new ResponseEntity<>(exceptionMessage.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return response;
+	}
+
 }
