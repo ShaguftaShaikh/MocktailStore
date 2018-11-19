@@ -58,14 +58,6 @@ public class Blog implements Serializable {
 		this.content = content;
 	}
 
-	public String getVisibile() {
-		return visibile;
-	}
-
-	public void setVisibile(String visibile) {
-		this.visibile = visibile;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

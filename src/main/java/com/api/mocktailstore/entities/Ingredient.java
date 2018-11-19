@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -23,8 +23,11 @@ public class Ingredient implements Serializable {
 
 	private String name;
 	
-	@OneToMany(mappedBy = "ingredient")
-	private List<IngredientMocktail> ingridientMocktail;
+	//@OneToMany(mappedBy = "ingredient")
+	//private List<IngredientMocktail> ingridientMocktail;
+	
+	@ManyToMany(mappedBy="ingredients")
+	private List<Mocktail> mocktail;
 
 	public long getIngredientId() {
 		return ingredientId;
