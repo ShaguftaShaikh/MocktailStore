@@ -24,9 +24,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author jayesh
  */
 @Entity
-// @NamedQuery(name = "Mocktail.findAll", query = "SELECT m.mocktailId,
-// im.ingredient.ingredientId FROM Mocktail m, IngredientMocktail im where
-// m.mocktailId=:im.mocktail.mocktailId")
 public class Mocktail implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -46,7 +43,7 @@ public class Mocktail implements Serializable {
 
 	private Boolean visible;
 
-	@OneToMany(mappedBy = "mocktail", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy = "mocktail", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<OrderMocktail> orderMocktail;
 
@@ -61,6 +58,20 @@ public class Mocktail implements Serializable {
 
 	private String recipe;
 
+	private int price;
+
+	public Mocktail() {
+
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
 	public String getRecipe() {
 		return recipe;
 	}
@@ -71,10 +82,6 @@ public class Mocktail implements Serializable {
 
 	public String getName() {
 		return name;
-	}
-
-	public Mocktail() {
-
 	}
 
 	public void setName(String name) {

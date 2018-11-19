@@ -46,6 +46,8 @@ public class PartyOrder implements Serializable {
 	@ManyToOne
 	private User placedBy;
 
+	private boolean accept;
+
 	public PartyOrder() {
 
 	}
@@ -58,6 +60,14 @@ public class PartyOrder implements Serializable {
 				.append(deliveryDate).append(", orderMocktails=").append(orderMocktails).append(", placedBy=")
 				.append(placedBy).append("]");
 		return builder.toString();
+	}
+
+	public boolean isAccept() {
+		return accept;
+	}
+
+	public void setAccept(boolean accept) {
+		this.accept = accept;
 	}
 
 	public long getOrderId() {

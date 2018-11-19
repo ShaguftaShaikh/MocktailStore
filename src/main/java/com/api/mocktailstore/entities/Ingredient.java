@@ -22,11 +22,8 @@ public class Ingredient implements Serializable {
 	private long ingredientId;
 
 	private String name;
-	
-	//@OneToMany(mappedBy = "ingredient")
-	//private List<IngredientMocktail> ingridientMocktail;
-	
-	@ManyToMany(mappedBy="ingredients")
+
+	@ManyToMany(mappedBy = "ingredients")
 	private List<Mocktail> mocktail;
 
 	public long getIngredientId() {

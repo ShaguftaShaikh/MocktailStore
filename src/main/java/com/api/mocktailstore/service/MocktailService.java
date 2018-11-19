@@ -12,9 +12,13 @@ import com.api.mocktailstore.repository.MocktailRepository;
 public class MocktailService {
 
 	@Autowired
-	MocktailRepository mocktailRepository;
+	private MocktailRepository mocktailRepository;
 
 	public List<Mocktail> getMocktails() {
 		return mocktailRepository.findAll();
+	}
+
+	public Mocktail addMocktail(final Mocktail mocktail) {
+		return mocktailRepository.save(mocktail);
 	}
 }
