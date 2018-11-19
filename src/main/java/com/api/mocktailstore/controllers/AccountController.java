@@ -31,24 +31,47 @@ public class AccountController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
 
-	@RequestMapping(method = RequestMethod.POST, value = "/signup")
-	public void signup(@Valid @RequestBody User user) {
-		LOGGER.info("signup method is called");
-		userService.saveUser(user);
+	/**
+	 * Signup functionality
+	 * 
+	 * @param user
+	 * @return response entity with valid HTTP code and message.
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "/signup", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<String> signup(@Valid @RequestBody User user) {
+		LOGGER.info("Recieved request for signup");
+		ResponseEntity<String> response = null;
+		boolean userExist = userExist(user.getEmail());
+		if (userExist) {
+			LOGGER.info("email id exist");
+			JSONObject exceptionJson = new JSONObject();
+			exceptionJson.put("message", "email id already exists");
+			response = new ResponseEntity<>(exceptionJson.toString(), HttpStatus.BAD_REQUEST);
+		} else {
+			User savedUser = userService.saveUser(user);
+			JSONObject responseObject = new JSONObject(savedUser);
+			response = new ResponseEntity<>(responseObject.toString(), HttpStatus.OK);
+			LOGGER.info("signup successful");
+		}
+		return response;
 	}
 
-	/*
-	 * @RequestMapping(method = RequestMethod.POST, value = "/username/exist")
-	 * public JsonNode usernameExist(@RequestBody String username) { ObjectMapper
-	 * mapper = new ObjectMapper(); JsonNode responseNode =
-	 * mapper.createObjectNode();
+	/**
+	 * Check whether email id already exist or not
 	 * 
-	 * if (username != "" && username != null && !username.equals("")) { Customer
-	 * visitor = visitorService.findByUsername(username); if (visitor != null) {
-	 * ((ObjectNode) responseNode).put("result", true); } else { ((ObjectNode)
-	 * responseNode).put("result", false); } } else { ((ObjectNode)
-	 * responseNode).put("result", true); } return responseNode; }
+	 * @param email
+	 * @return true or false
 	 */
+	public boolean userExist(String email) {
+		LOGGER.info("Checking for email existence");
+		User user = userService.findByEmail(email);
+		if (user != null) {
+			LOGGER.info("email id exist");
+			return true;
+		}
+		LOGGER.info("email id not found");
+		return false;
+	}
 
 	/**
 	 * 

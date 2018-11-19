@@ -3,14 +3,21 @@ package com.api.mocktailstore.entities;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -36,7 +43,8 @@ public class Mocktail implements Serializable {
 
 	private Boolean visible;
 
-	@OneToMany(mappedBy = "mocktail")
+	@OneToMany(mappedBy = "mocktail", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<OrderMocktail> orderMocktail;
 
 	@OneToMany
@@ -44,17 +52,24 @@ public class Mocktail implements Serializable {
 
 	private String imageUrl;
 
-	@OneToMany(mappedBy = "mocktail")
-	private List<IngredientMocktail> ingridientMocktail;
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "mocktail_ingredient", joinColumns = @JoinColumn(name = "mocktailId"), inverseJoinColumns = @JoinColumn(name = "ingredientId"))
+	private List<Ingredient> ingredients;
 
 	private String recipe;
 
-	public List<IngredientMocktail> getIngridientMocktail() {
-		return ingridientMocktail;
+	private int price;
+
+	public Mocktail() {
+
 	}
 
-	public void setIngridientMocktail(List<IngredientMocktail> ingridientMocktail) {
-		this.ingridientMocktail = ingridientMocktail;
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 	public String getRecipe() {
@@ -67,10 +82,6 @@ public class Mocktail implements Serializable {
 
 	public String getName() {
 		return name;
-	}
-
-	public Mocktail() {
-
 	}
 
 	public void setName(String name) {
@@ -135,6 +146,14 @@ public class Mocktail implements Serializable {
 
 	public void setRatings(List<Rating> ratings) {
 		this.ratings = ratings;
+	}
+
+	public List<Ingredient> getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(List<Ingredient> ingredients) {
+		this.ingredients = ingredients;
 	}
 
 }
