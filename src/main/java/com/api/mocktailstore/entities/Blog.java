@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -18,8 +19,10 @@ public class Blog implements Serializable {
 	@GenericGenerator(name = "native", strategy = "native")
 	private long blogId;
 	private String title;
+
+	@Lob
 	private String content;
-	private String visibile;
+	private boolean visibile;
 	private String author;
 
 	public Blog() {
@@ -56,6 +59,14 @@ public class Blog implements Serializable {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public boolean getVisibile() {
+		return visibile;
+	}
+
+	public void setVisibile(boolean visibile) {
+		this.visibile = visibile;
 	}
 
 	@Override
