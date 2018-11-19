@@ -17,7 +17,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
- * @author jayesh
  */
 @Entity
 public class PartyOrder implements Serializable {
