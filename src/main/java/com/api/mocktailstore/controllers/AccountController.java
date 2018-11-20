@@ -98,7 +98,9 @@ public class AccountController {
 					final boolean isLoginSuccessful = userService.login(savedUser, user);
 					if (isLoginSuccessful) {
 						JSONObject userJson = new JSONObject();
-						userJson.put("email", user.getEmail()).put("password", user.getPassword());
+						userJson.put("id", savedUser.getId()).put("firstName", savedUser.getFirstName())
+								.put("lastName", savedUser.getLastName()).put("contactNo", savedUser.getContactNo())
+								.put("email", savedUser.getEmail());
 						response = new ResponseEntity<>(userJson.toString(), HttpStatus.OK);
 						LOGGER.info("Login successful");
 					} else {
