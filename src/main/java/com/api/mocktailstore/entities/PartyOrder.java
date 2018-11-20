@@ -10,10 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -30,13 +33,29 @@ public class PartyOrder implements Serializable {
 
 	private String description;
 
+	public PartyOrder(String description, @Size(min = 30, message = "Minimum 30 characters required") String venue,
+			@NotNull(message = "order date must not be empty") Date placedDate,
+			@NotNull(message = "delivery date must not be empty") Date deliveryDate, List<OrderMocktail> orderMocktails,
+			User placedBy, short status) {
+		super();
+		this.description = description;
+		this.venue = venue;
+		this.placedDate = placedDate;
+		this.deliveryDate = deliveryDate;
+		this.orderMocktails = orderMocktails;
+		this.placedBy = placedBy;
+		this.status = status;
+	}
+
 	@Size(min = 30, message = "Minimum 30 characters required")
 	private String venue;
 
-	@NotEmpty(message = "order date must not be empty")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+	@NotNull(message = "order date must not be empty")
 	private Date placedDate;
 
-	@NotEmpty(message = "delivery date must not be empty")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+	@NotNull(message = "delivery date must not be empty")
 	private Date deliveryDate;
 
 	@OneToMany(mappedBy = "order")
@@ -45,7 +64,8 @@ public class PartyOrder implements Serializable {
 	@ManyToOne
 	private User placedBy;
 
-	private boolean accept;
+	@JsonIgnore
+	private short status;
 
 	public PartyOrder() {
 
@@ -61,12 +81,12 @@ public class PartyOrder implements Serializable {
 		return builder.toString();
 	}
 
-	public boolean isAccept() {
-		return accept;
+	public short getStatus() {
+		return status;
 	}
 
-	public void setAccept(boolean accept) {
-		this.accept = accept;
+	public void setStatus(short status) {
+		this.status = status;
 	}
 
 	public long getOrderId() {

@@ -19,6 +19,14 @@ public class OrderMocktail {
 	@MapsId("orderId")
 	private PartyOrder order;
 
+	public PartyOrder getOrder() {
+		return order;
+	}
+
+	public void setOrder(PartyOrder order) {
+		this.order = order;
+	}
+
 	private int quantity;
 
 	public OrderMocktail() {

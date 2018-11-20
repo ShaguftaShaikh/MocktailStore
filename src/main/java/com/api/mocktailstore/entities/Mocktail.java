@@ -156,4 +156,15 @@ public class Mocktail implements Serializable {
 		this.ingredients = ingredients;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Mocktail [mocktailId=").append(mocktailId).append(", name=").append(name).append(", tagLine=")
+				.append(tagLine).append(", description=").append(description).append(", visible=").append(visible)
+				.append(", orderMocktail=").append(orderMocktail).append(", ratings=").append(ratings)
+				.append(", imageUrl=").append(imageUrl).append(", ingredients=").append(ingredients).append(", recipe=")
+				.append(recipe).append(", price=").append(price).append("]");
+		return builder.toString();
+	}
+
 }
