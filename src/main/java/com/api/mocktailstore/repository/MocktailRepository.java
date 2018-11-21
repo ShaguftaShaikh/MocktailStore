@@ -6,4 +6,5 @@ import com.api.mocktailstore.entities.Mocktail;
 
 public interface MocktailRepository extends JpaRepository<Mocktail, Long>{
 
+	public Mocktail findByMocktailId(long id);
 }

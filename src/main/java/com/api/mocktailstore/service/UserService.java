@@ -11,14 +11,10 @@ import com.api.mocktailstore.repository.UserRepository;
 @Service("userService")
 public class UserService {
 
+	@Autowired
 	private UserRepository userRepository;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
-
-	@Autowired
-	public UserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
 
 	public User saveUser(User user) {
 		return userRepository.save(user);
@@ -54,5 +50,9 @@ public class UserService {
 		userRepository.save(savedUser);
 		LOGGER.debug("Updated to: " + savedUser.toString());
 		return savedUser;
+	}
+	
+	public User getUserById(final long id) {
+		return userRepository.findById(id);
 	}
 }
