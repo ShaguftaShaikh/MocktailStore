@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.api.mocktailstore.entities.Admin;
 import com.api.mocktailstore.entities.User;
+import com.api.mocktailstore.service.AdminService;
 import com.api.mocktailstore.service.UserService;
 
 @CrossOrigin
@@ -28,6 +30,9 @@ public class AccountController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private AdminService adminService;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
 
@@ -134,6 +139,44 @@ public class AccountController {
 		ResponseEntity<User> response = null;
 		final User updatedUser = userService.editProfile(user);
 		response = new ResponseEntity<>(updatedUser, HttpStatus.OK);
+		return response;
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/admin/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<String> adminLogin(@RequestBody Admin admin) {
+		LOGGER.info("Received a request for admin login");
+		ResponseEntity<String> response = null;
+		try {
+			if (!Objects.isNull(admin) && !Objects.isNull(admin.getEmail()) && !Objects.isNull(admin.getPassword())) {
+				final String username = admin.getEmail();
+				final Admin savedUser = adminService.findByEmail(username);
+				JSONObject exceptionJson = new JSONObject();
+				exceptionJson.put("message", "Invalid login. Please check your name and password.");
+				if (Objects.isNull(savedUser)) {
+					LOGGER.info("Login failed.");
+					response = new ResponseEntity<>(exceptionJson.toString(), HttpStatus.UNAUTHORIZED);
+				} else {
+					final boolean isLoginSuccessful = adminService.login(savedUser, admin);
+					if (isLoginSuccessful) {
+						JSONObject userJson = new JSONObject();
+						userJson.put("id", savedUser.getAdminId()).put("email", savedUser.getEmail());
+						response = new ResponseEntity<>(userJson.toString(), HttpStatus.OK);
+						LOGGER.info("Login successful");
+					} else {
+						response = new ResponseEntity<>(exceptionJson.toString(), HttpStatus.UNAUTHORIZED);
+						LOGGER.info("Login failed.");
+					}
+				}
+			} else {
+				JSONObject exceptionJson = new JSONObject();
+				exceptionJson.put("message", "Email or password cannot be null.");
+				response = new ResponseEntity<>(exceptionJson.toString(), HttpStatus.BAD_REQUEST);
+				LOGGER.info("Login failed.");
+			}
+		} catch (JSONException e) {
+			LOGGER.error("Error occurred while creating JSON object");
+			response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		return response;
 	}
 
