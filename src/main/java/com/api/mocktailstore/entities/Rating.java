@@ -30,8 +30,19 @@ public class Rating implements Serializable {
 	@ManyToOne
 	private User ratedBy;
 
+	@ManyToOne
+	private Mocktail ratedFor;
+
 	public Rating() {
 
+	}
+
+	public Mocktail getRatedFor() {
+		return ratedFor;
+	}
+
+	public void setRatedFor(Mocktail ratedFor) {
+		this.ratedFor = ratedFor;
 	}
 
 	public long getRatingId() {

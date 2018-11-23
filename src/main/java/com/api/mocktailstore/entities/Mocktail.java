@@ -1,18 +1,13 @@
 package com.api.mocktailstore.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 
@@ -25,6 +20,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @author jayesh
  */
 @Entity
+// @NamedQuery(name="Mocktail.findAll",query="SELECT m FROM Mocktail m LEFT JOIN
+// Rating ON ratedFor := m")
 public class Mocktail implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -48,17 +45,8 @@ public class Mocktail implements Serializable {
 	@JsonIgnore
 	private List<OrderMocktail> orderMocktail;
 
-	@OneToMany
-	private List<Rating> ratings = new ArrayList<>();
-
 	private String imageUrl;
-
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "mocktail_ingredient", joinColumns = @JoinColumn(name = "mocktailId"), inverseJoinColumns = @JoinColumn(name = "ingredientId"))
-	private List<Ingredient> ingredients;
-
 	private String recipe;
-
 	private int price;
 
 	public Mocktail() {
@@ -141,30 +129,13 @@ public class Mocktail implements Serializable {
 		return visible;
 	}
 
-	public List<Rating> getRatings() {
-		return ratings;
-	}
-
-	public void addRating(Rating rating) {
-		ratings.add(rating);
-	}
-
-	public List<Ingredient> getIngredients() {
-		return ingredients;
-	}
-
-	public void setIngredients(List<Ingredient> ingredients) {
-		this.ingredients = ingredients;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Mocktail [mocktailId=").append(mocktailId).append(", name=").append(name).append(", tagLine=")
 				.append(tagLine).append(", description=").append(description).append(", visible=").append(visible)
-				.append(", orderMocktail=").append(orderMocktail).append(", ratings=").append(ratings)
-				.append(", imageUrl=").append(imageUrl).append(", ingredients=").append(ingredients).append(", recipe=")
-				.append(recipe).append(", price=").append(price).append("]");
+				.append(", orderMocktail=").append(orderMocktail).append(", imageUrl=").append(imageUrl)
+				.append(", recipe=").append(recipe).append(", price=").append(price).append("]");
 		return builder.toString();
 	}
 
