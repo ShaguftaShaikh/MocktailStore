@@ -55,4 +55,8 @@ public class UserService {
 		LOGGER.debug("Updated to: " + savedUser.toString());
 		return savedUser;
 	}
+
+	public User findById(long id) {
+		return userRepository.findById(id);
+	}
 }

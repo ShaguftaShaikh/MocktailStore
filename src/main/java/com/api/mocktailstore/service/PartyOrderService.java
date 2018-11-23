@@ -56,4 +56,17 @@ public class PartyOrderService {
 		}
 		return lastOrderedId;
 	}
+
+	public List<PartyOrder> getAllPartyOrders() {
+		return partyOrderRepository.findAll();
+	}
+
+	public List<OrderMocktail> getAllMocktailOrders() {
+		return orderMocktailRepository.findAll();
+	}
+
+	public List<OrderMocktail> getMocktailOrderDetailsByOrderId(long orderId) {
+		return orderMocktailRepository.getMocktailOrderDetailsByOrderId(orderId);
+	}
+
 }

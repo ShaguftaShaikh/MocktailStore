@@ -21,4 +21,8 @@ public class MocktailService {
 	public Mocktail addMocktail(final Mocktail mocktail) {
 		return mocktailRepository.save(mocktail);
 	}
+
+	public Mocktail getMocktailById(long mocktailId) {
+		return mocktailRepository.findByMocktailId(mocktailId);
+	}
 }
