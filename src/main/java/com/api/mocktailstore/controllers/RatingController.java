@@ -11,10 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.mocktailstore.entities.Mocktail;
@@ -73,6 +73,7 @@ public class RatingController {
 					Rating convertedRating = ratingService.getObject((JsonNode) parsedNode);
 					convertedRating.setRatedBy(user);
 					convertedRating.setRatedFor(mocktail);
+					convertedRating.setVisible(true);
 
 					LOGGER.info("Adding rating data to rating table");
 					Rating addRating = ratingService.addRating(convertedRating);
@@ -102,9 +103,9 @@ public class RatingController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}/list", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public List<Rating> getMocktailRating(@RequestParam long mocktailId) {
-		LOGGER.info("Received a request for fething all ratings of mocktail with id: " + mocktailId);
-		Mocktail mocktail = mocktailService.getMocktailById(mocktailId);
+	public List<Rating> getMocktailRating(@PathVariable long id) {
+		LOGGER.info("Received a request for fething all ratings of mocktail with id: " + id);
+		Mocktail mocktail = mocktailService.getMocktailById(id);
 		return ratingService.getRatingsByMocktailId(mocktail);
 	}
 }

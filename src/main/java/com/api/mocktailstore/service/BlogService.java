@@ -23,7 +23,7 @@ public class BlogService {
 	private static final boolean DEFAULT_BLOG_VISIBILITY = true;
 
 	public Blog saveBlog(Blog blog) {
-		LOGGER.debug("Saving blog -> " + blog.toString());
+		
 		blog.setVisible(DEFAULT_BLOG_VISIBILITY);
 		return blogRepository.save(blog);
 	}
