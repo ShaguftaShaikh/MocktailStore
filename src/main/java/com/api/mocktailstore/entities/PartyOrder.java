@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -47,7 +48,7 @@ public class PartyOrder implements Serializable {
 		this.status = status;
 	}
 
-	@Size(min = 30, message = "Minimum 30 characters required")
+	@Size(min = 10, message = "Minimum 10 characters required")
 	private String venue;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
@@ -61,7 +62,7 @@ public class PartyOrder implements Serializable {
 	@OneToMany(mappedBy = "order")
 	private List<OrderMocktail> orderMocktails;
 
-	@ManyToOne
+	@ManyToOne(cascade = { CascadeType.DETACH })
 	private User placedBy;
 
 	@JsonIgnore

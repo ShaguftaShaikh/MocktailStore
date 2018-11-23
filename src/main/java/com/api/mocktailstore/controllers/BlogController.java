@@ -35,9 +35,18 @@ public class BlogController {
 	private BlogService blogService;
 
 	@RequestMapping(method = RequestMethod.POST, value = "/save")
-	public void saveBlog(@Valid @RequestBody Blog blog) {
-		LOGGER.info("Received a request to save blog");
-		blogService.saveBlog(blog);
+	public ResponseEntity<String> saveBlog(@Valid @RequestBody Blog blog) {
+		LOGGER.info("Received a request to save blog: " + blog.toString());
+		final Blog savedBlog = blogService.saveBlog(blog);
+		ResponseEntity<String> response = null;
+		if (!Objects.isNull(savedBlog)) {
+			response = new ResponseEntity<>(blogService.getJsonString(savedBlog).toString(), HttpStatus.OK);
+		} else {
+			JSONObject exceptionJson = new JSONObject();
+			exceptionJson.put("message", "internal error");
+			response = new ResponseEntity<>(exceptionJson.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return response;
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/getAllBlogs", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

@@ -1,5 +1,6 @@
 package com.api.mocktailstore.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -25,13 +26,13 @@ public class PartyOrderService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PartyOrderService.class);
 
-	private static final short ORDER_STATUS = 0;
+	private static final short ORDER_STATUS_PENDING = 0;
 
 	public synchronized long requestOrder(PartyOrder partyOrder) {
 		long lastOrderedId = 0L;
-		PartyOrder newOrder = new PartyOrder(partyOrder.getDescription(), partyOrder.getVenue(),
-				partyOrder.getPlacedDate(), partyOrder.getDeliveryDate(), partyOrder.getOrderMocktails(),
-				partyOrder.getPlacedBy(), ORDER_STATUS);
+		PartyOrder newOrder = new PartyOrder(partyOrder.getDescription(), partyOrder.getVenue(), new Date(),
+				partyOrder.getDeliveryDate(), partyOrder.getOrderMocktails(), partyOrder.getPlacedBy(),
+				ORDER_STATUS_PENDING);
 		LOGGER.debug("Saving party order: " + partyOrder.toString());
 		List<OrderMocktail> orderedMocktails = partyOrder.getOrderMocktails();
 		partyOrderRepository.save(newOrder);
@@ -56,4 +57,23 @@ public class PartyOrderService {
 		}
 		return lastOrderedId;
 	}
+
+	public PartyOrder changeOrderStatus(long orderId, short orderStatus) {
+		PartyOrder savedOrder = partyOrderRepository.findByOrderId(orderId);
+		savedOrder.setStatus(orderStatus);
+		return partyOrderRepository.save(savedOrder);
+	}
+
+	public List<PartyOrder> getAllPartyOrders() {
+		return partyOrderRepository.findAll();
+	}
+
+	public List<OrderMocktail> getAllMocktailOrders() {
+		return orderMocktailRepository.findAll();
+	}
+
+	public List<OrderMocktail> getMocktailOrderDetailsByOrderId(long orderId) {
+		return orderMocktailRepository.getMocktailOrderDetailsByOrderId(orderId);
+	}
+
 }

@@ -53,7 +53,7 @@ public class UserService {
 		LOGGER.debug("Updated to: " + savedUser.toString());
 		return savedUser;
 	}
-	
+
 	public User getUserById(final long id) {
 		return userRepository.findById(id);
 	}
