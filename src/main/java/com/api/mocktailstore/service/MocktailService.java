@@ -17,7 +17,7 @@ public class MocktailService {
 
 	@Autowired
 	private MocktailRepository mocktailRepository;
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(MocktailService.class);
 
 	public List<Mocktail> getMocktails() {
@@ -26,21 +26,15 @@ public class MocktailService {
 	}
 
 	public Mocktail addMocktail(final Mocktail mocktail) {
-		LOGGER.debug("Adding mocktail with details "+mocktail);
+		LOGGER.debug("Adding mocktail with details " + mocktail);
 		return mocktailRepository.save(mocktail);
 	}
-<<<<<<< HEAD
 
-	public Mocktail getMocktailById(long mocktailId) {
-		return mocktailRepository.findByMocktailId(mocktailId);
-	}
-=======
-	
 	public Mocktail getMocktailById(final long id) {
-		LOGGER.debug("finding mocktail by id: "+id);
+		LOGGER.debug("finding mocktail by id: " + id);
 		return mocktailRepository.findByMocktailId(id);
 	}
-	
+
 	public String getJsonString(final Mocktail mocktail) {
 		LOGGER.debug("Converting " + mocktail.toString() + " to JSON String");
 		ObjectMapper mapper = new ObjectMapper();
@@ -53,6 +47,5 @@ public class MocktailService {
 		}
 		return jsonString.toString();
 	}
-	
->>>>>>> upstream/master
+
 }

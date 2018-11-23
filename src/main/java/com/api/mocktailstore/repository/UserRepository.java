@@ -7,9 +7,6 @@ import com.api.mocktailstore.entities.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 	public User findByEmail(String email);
-<<<<<<< HEAD
 
-=======
->>>>>>> upstream/master
 	public User findById(long id);
 }

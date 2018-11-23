@@ -51,13 +51,8 @@ public class UserService {
 		LOGGER.debug("Updated to: " + savedUser.toString());
 		return savedUser;
 	}
-<<<<<<< HEAD
 
-	public User findById(long id) {
-=======
-	
 	public User getUserById(final long id) {
->>>>>>> upstream/master
 		return userRepository.findById(id);
 	}
 }

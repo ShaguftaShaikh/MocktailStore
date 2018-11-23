@@ -63,7 +63,7 @@ public class OrderController {
 			System.out.println("partyOrder: " + partyOrder.getDescription());
 			System.out.println("partyOrder: " + partyOrder.getOrderId());
 
-			User placedBy = userService.findById(partyOrder.getPlacedBy().getId());
+			User placedBy = userService.getUserById(partyOrder.getPlacedBy().getId());
 
 			JSONObject orderJson = new JSONObject();
 
