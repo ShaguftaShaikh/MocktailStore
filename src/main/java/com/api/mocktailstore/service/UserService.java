@@ -46,7 +46,9 @@ public class UserService {
 		savedUser.setContactNo(user.getContactNo());
 		savedUser.setFirstName(user.getFirstName());
 		savedUser.setLastName(user.getLastName());
-		savedUser.setPassword(user.getPassword());
+		if(!user.getPassword().equals("")) {
+			savedUser.setPassword(user.getPassword());
+		}
 		userRepository.save(savedUser);
 		LOGGER.debug("Updated to: " + savedUser.toString());
 		return savedUser;
