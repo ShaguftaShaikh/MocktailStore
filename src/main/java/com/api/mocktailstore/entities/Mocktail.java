@@ -1,6 +1,7 @@
 package com.api.mocktailstore.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -48,7 +49,7 @@ public class Mocktail implements Serializable {
 	private List<OrderMocktail> orderMocktail;
 
 	@OneToMany
-	private List<Rating> ratings;
+	private List<Rating> ratings = new ArrayList<>();
 
 	private String imageUrl;
 
@@ -144,8 +145,8 @@ public class Mocktail implements Serializable {
 		return ratings;
 	}
 
-	public void setRatings(List<Rating> ratings) {
-		this.ratings = ratings;
+	public void addRating(Rating rating) {
+		ratings.add(rating);
 	}
 
 	public List<Ingredient> getIngredients() {

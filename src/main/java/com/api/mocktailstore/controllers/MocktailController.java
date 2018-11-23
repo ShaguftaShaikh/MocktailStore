@@ -31,8 +31,10 @@ public class MocktailController {
 		return mocktailService.getMocktails();
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public Mocktail addMocktail(@RequestBody Mocktail mocktail) {
+		LOGGER.info("Received a request to add mocktail" + mocktail);
 		return mocktailService.addMocktail(mocktail);
 	}
+
 }

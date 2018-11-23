@@ -23,10 +23,11 @@ import org.hibernate.annotations.GenericGenerator;
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
 	@GenericGenerator(name = "native", strategy = "native")
-	protected long id;
+	private long id;
 
 	@Size(min = 10, max = 10, message = "contact number should be 10 digits long")
 	private String contactNo;
@@ -43,12 +44,12 @@ public class User implements Serializable {
 	@NotEmpty
 	protected String lastName;
 
-	public long getId() {
-		return id;
-	}
-
 	public User() {
 
+	}
+
+	public long getId() {
+		return id;
 	}
 
 	public void setId(long id) {

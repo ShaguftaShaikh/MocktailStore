@@ -8,4 +8,5 @@ public interface MocktailRepository extends JpaRepository<Mocktail, Long> {
 
 	public Mocktail findByMocktailId(long mocktailId);
 
+	public Mocktail findByMocktailId(long id);
 }

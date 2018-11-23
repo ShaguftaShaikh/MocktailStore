@@ -6,8 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -28,8 +27,7 @@ public class Rating implements Serializable {
 	private String comment;
 	private boolean visible;
 
-	@OneToOne
-	@MapsId("userId")
+	@ManyToOne
 	private User ratedBy;
 
 	public Rating() {
