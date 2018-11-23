@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.mocktailstore.entities.Mocktail;
@@ -78,7 +79,6 @@ public class OrderController {
 			for (OrderMocktail orderMocktail : orderMocktails) {
 				final int quantity = orderMocktail.getQuantity();
 				final long mocktailId = orderMocktail.getMocktail().getMocktailId();
-				// final long orderId = orderMocktail.getOrder().getOrderId();
 
 				Mocktail orderedMocktail = mocktailService.getMocktailById(mocktailId);
 
@@ -91,11 +91,23 @@ public class OrderController {
 			}
 			orderJson.put("mocktails", mocktailJsonArray);
 			orderJsonArray.put(orderJson);
-			System.out.println("orderJson: " + orderJson.toString());
-
 		}
-		System.out.println("OrderJsonArray: " + orderJsonArray.toString());
 		return orderJsonArray.toString();
+	}
+
+	@RequestMapping(method = RequestMethod.PUT, value = "/changeStatus")
+	public ResponseEntity<String> changeOrderStatus(@RequestParam long orderId, @RequestParam short orderStatus) {
+		ResponseEntity<String> response = null;
+		JSONObject obj = new JSONObject();
+		if (orderStatus >= 0 && orderStatus <= 2) {
+			partyOrderService.changeOrderStatus(orderId, orderStatus);
+			obj.put("message", "success");
+			response = new ResponseEntity<>(obj.toString(), HttpStatus.OK);
+		} else {
+			obj.put("message", "invalid code");
+			response = new ResponseEntity<>(obj.toString(), HttpStatus.BAD_REQUEST);
+		}
+		return response;
 	}
 
 }

@@ -16,4 +16,5 @@ public interface PartyOrderRepository extends JpaRepository<PartyOrder, Long> {
 	@Query("SELECT o FROM OrderMocktail o WHERE o.order.orderId=?1")
 	public List<OrderMocktail> getMocktailOrderDetailsByOrderId(long orderId);
 
+	public PartyOrder findByOrderId(long orderId);
 }

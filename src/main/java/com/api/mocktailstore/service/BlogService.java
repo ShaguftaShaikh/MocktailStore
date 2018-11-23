@@ -20,11 +20,12 @@ public class BlogService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BlogService.class);
 
-	public void saveBlog(Blog blog) {
-		/**
-		 * TODO: manipulation of blog content string, if required.
-		 */
-		blogRepository.save(blog);
+	private static final boolean DEFAULT_BLOG_VISIBILITY = true;
+
+	public Blog saveBlog(Blog blog) {
+		LOGGER.debug("Saving blog -> " + blog.toString());
+		blog.setVisible(DEFAULT_BLOG_VISIBILITY);
+		return blogRepository.save(blog);
 	}
 
 	/**
@@ -58,7 +59,7 @@ public class BlogService {
 		savedBlog.setAuthor(blog.getAuthor());
 		savedBlog.setTitle(blog.getTitle());
 		savedBlog.setContent(blog.getContent());
-		savedBlog.setVisibile(blog.getVisibile());
+		savedBlog.setVisible(blog.getVisible());
 		blogRepository.save(savedBlog);
 		LOGGER.debug("updated to: " + savedBlog.toString());
 		return savedBlog;

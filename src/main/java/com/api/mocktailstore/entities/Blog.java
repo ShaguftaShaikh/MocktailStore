@@ -22,7 +22,7 @@ public class Blog implements Serializable {
 
 	@Lob
 	private String content;
-	private boolean visibile;
+	private boolean visible;
 	private String author;
 
 	public Blog() {
@@ -61,19 +61,19 @@ public class Blog implements Serializable {
 		this.content = content;
 	}
 
-	public boolean getVisibile() {
-		return visibile;
+	public boolean getVisible() {
+		return visible;
 	}
 
-	public void setVisibile(boolean visibile) {
-		this.visibile = visibile;
+	public void setVisible(boolean visibile) {
+		this.visible = visibile;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Blog [blogId=").append(blogId).append(", title=").append(title).append(", content=")
-				.append(content).append(", visibile=").append(visibile).append(", author=").append(author).append("]");
+				.append(content).append(", visibile=").append(visible).append(", author=").append(author).append("]");
 		return builder.toString();
 	}
 
