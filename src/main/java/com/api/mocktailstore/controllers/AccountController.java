@@ -4,6 +4,8 @@ import java.util.Objects;
 
 import javax.validation.Valid;
 
+import com.api.mocktailstore.exceptions.UserAlreadyExists;
+import com.api.mocktailstore.util.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -43,22 +45,21 @@ public class AccountController {
 	 * @return response entity with valid HTTP code and message.
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/signup", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<String> signup(@Valid @RequestBody User user) {
-		LOGGER.info("Recieved request for signup");
-		ResponseEntity<String> response = null;
+	public ResponseEntity<Response> signup(@Valid @RequestBody User user) {
+		LOGGER.info("Signup request received!");
 		boolean userExist = userExist(user.getEmail());
+
 		if (userExist) {
-			LOGGER.info("email id exist");
-			JSONObject exceptionJson = new JSONObject();
-			exceptionJson.put("message", "email id already exists");
-			response = new ResponseEntity<>(exceptionJson.toString(), HttpStatus.BAD_REQUEST);
+			LOGGER.info("user with email id already exist!");
+			throw new UserAlreadyExists(user.getEmail());
+
 		} else {
 			User savedUser = userService.saveUser(user);
-			JSONObject responseObject = new JSONObject(savedUser);
-			response = new ResponseEntity<>(responseObject.toString(), HttpStatus.OK);
-			LOGGER.info("signup successful");
+			LOGGER.info("signup successful!");
+
+			return new ResponseEntity<>(Response.success("signup successful!"), HttpStatus.CREATED);
+
 		}
-		return response;
 	}
 
 	/**

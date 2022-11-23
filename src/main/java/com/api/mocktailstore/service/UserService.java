@@ -27,10 +27,8 @@ public class UserService {
 	public boolean login(final User savedUser, final User user) {
 		LOGGER.debug("Login request: savedUser[email: " + savedUser.getEmail() + " password:" + savedUser.getPassword()
 				+ "], requestedUser[email:" + user.getEmail() + " password:" + user.getPassword() + "]");
-		if (savedUser.getEmail().equals(user.getEmail()) && savedUser.getPassword().equals(user.getPassword())) {
-			return true;
-		}
-		return false;
+
+		return savedUser.getEmail().equals(user.getEmail()) && savedUser.getPassword().equals(user.getPassword());
 	}
 
 	/**
